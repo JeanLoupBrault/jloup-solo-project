@@ -1,0 +1,104 @@
+[
+  {
+    "_id": 1,
+    "region": "Bas-Saint-Laurent",
+    "province": "Quebec",
+    "country": "Canada"
+  },
+  {
+    "_id": 2,
+    "region": "Saguenay-Lac-Saint-Jean",
+    "province": "Quebec",
+    "country": "Canada"
+  },
+  {
+    "_id": 3,
+    "region": "Capitale-Nationale",
+    "province": "Quebec",
+    "country": "Canada"
+  },
+  {
+    "_id": 4,
+    "region": "Mauricie",
+    "province": "Quebec",
+    "country": "Canada"
+  },
+  {
+    "_id": 5,
+    "region": "Estrie",
+    "province": "Quebec",
+    "country": "Canada"
+  },
+  {
+    "_id": 6,
+    "region": "Montreal",
+    "province": "Quebec",
+    "country": "Canada"
+  },
+  {
+    "_id": 7,
+    "region": "Outaouais",
+    "province": "Quebec",
+    "country": "Canada"
+  },
+  {
+    "_id": 8,
+    "region": "Abitibi-Temiscamingue",
+    "province": "Quebec",
+    "country": "Canada"
+  },
+  {
+    "_id": 9,
+    "region": "Cote-Nord",
+    "province": "Quebec",
+    "country": "Canada"
+  },
+  {
+    "_id": 10,
+    "region": "Nord-du-Quebec",
+    "province": "Quebec",
+    "country": "Canada"
+  },
+  {
+    "_id": 11,
+    "region": "Gaspesie-Iles-de-la-Madeleine",
+    "province": "Quebec",
+    "country": "Canada"
+  },
+  {
+    "_id": 12,
+    "region": "Chaudiere-Appalaches",
+    "province": "Quebec",
+    "country": "Canada"
+  },
+  {
+    "_id": 13,
+    "region": "Laval",
+    "province": "Quebec",
+    "country": "Canada"
+  },
+  {
+    "_id": 14,
+    "region": "Lanaudiere",
+    "province": "Quebec",
+    "country": "Canada"
+  },
+  {
+    "_id": 15,
+    "region": "Laurentides",
+    "province": "Quebec",
+    "country": "Canada"
+  },
+  {
+    "_id": 16,
+    "region": "Monteregie",
+    "province": "Quebec",
+    "country": "Canada"
+  },
+  {
+    "_id": 17,
+    "region": "Centre-du-Quebec",
+    "province": "Quebec",
+    "country": "Canada"
+  }
+]

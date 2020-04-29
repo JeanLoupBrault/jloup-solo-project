@@ -1,0 +1,11 @@
+h1,
+p {
+  font-family: Lato;
+}
+
+.container {
+  background-image: url("./womaninshoppingcart.jpg");
+  display: flex;
+  width: 800px;
+  height: 800px;
+}
