@@ -20,18 +20,9 @@ import configureStore from './store';
 // import FormPage from './FormManageProducts/FormPage';
 // import './App.css';
 import VacationForm from "./VacationForm/VacationForm.js";
-// import PostList from "./Post/PostList.js";
+import UpdatePriceForm from "./UpdatePriceForm/UpdatePriceForm";
 import AdminForm from "./AdminForm/AdminForm.js";
 
-// class AddNinja extends Component {
-//     state = {
-//         ninjas: [
-//             { name: 'Ryu', age: 30, belt: 'black', id: 1 },
-//             { name: 'Yoshi', age: 20, belt: 'green', id: 1 },
-//             { name: 'Crystal', age: 25, belt: 'pink', id: 1 }
-//         ]
-//     }
-// }
 
 const store = configureStore();
 
@@ -84,10 +75,10 @@ function App() {
                         <Route path="/vacation">
                             <VacationForm />
                         </Route>
-                        {/* <Route path="/post">
-                            <PostList />
-                        </Route> */}
-                        <Route path="/product/:id">
+                        <Route path="/updatePrice">
+                            <UpdatePriceForm />
+                        </Route>
+                        <Route path="/adminView">
                             <AdminForm />
                         </Route>
                         <Route path="/users">

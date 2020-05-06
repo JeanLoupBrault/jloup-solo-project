@@ -493,9 +493,9 @@ express()
     }
   })
 
-  //Order-Form Validation modify a selected product quantity and price in MongoDB
+  //Update Price -Form Validation modify a selected product price in MongoDB
 
-  .put("/product/:id", async (req, res) => {
+  .put("/productId/update»Product", async (req, res) => {
 
     const updatePriceQty = Object.values(req.body.updatePriceQty);
     console.log('req.body typeof: ', typeof updatePriceQty)
@@ -571,36 +571,6 @@ express()
     await postVacation();
   })
 
-  //Vacation-Form retreive all in MongoDB
-
-  // .get("/vacation/:name", async (req, res) => {
-
-  //   const client = new MongoClient('mongodb://localhost:27017', {
-  //     useUnifiedTopology: true,
-  //   })
-  //   const sendVacation = async () => {
-  //     console.log("***In sendVacation...")
-  //     await client.connect();
-  //     console.log('connected!');
-  //     const db = await client.db('jloupsoloproject');
-  //     const data = db.collection('vacation').find().toArray((data => {
-  //       if (data.length) {
-  //         const start = Number(req.query.start) || 0;
-  //         const cleanStart = start > -1 && start < result.length ? start : 0;
-  //         const end = cleanStart + (Number(req.query.limit) || 25);
-  //         const cleanEnd = end > result.length ? result.length - 1 : end;
-  //         const data = result.slice(cleanStart, cleanEnd);
-
-  //         console.log('sendVacation data', data)
-  //       } else {
-  //         res.status(404).json({ status: 404, data: 'Not Found' });
-  //       }
-  //       client.close();
-  //     })
-  //     )
-  //   }
-  //   await sendVacation();
-  // })
 
   //Vacation-Form retreive all in MongoDB
 
@@ -619,15 +589,7 @@ express()
         const db = await client.db('jloupsoloproject');
         const data = await db.collection('vacation').find().toArray()
         console.log('sendVacation data', data)
-        if (data.name === req.params) {
-          uniqueCustomerName = []
-          data.map((custName) => {
-            ;
-            if (uniqueCustomerName.indexOf(custName.custName) === -1) {
-              uniqueCustomerName.push(custName.custName);
-            }
-          })
-        }
+
         res.status(200).send(data);
         client.close();
         console.log('disconnected!');
@@ -643,67 +605,94 @@ express()
 
   //Vacation-Form retreive all from one customer by name in MongoDB
 
-  // .get("/vacation/:name", async (req, res) => {
+  .post("/adminView", async (req, res) => {
+    console.log('req.body', req.body)
+    const client = new MongoClient('mongodb://localhost:27017', {
+      useUnifiedTopology: true,
+    })
 
-  //   const client = new MongoClient('mongodb://localhost:27017', {
-  //     useUnifiedTopology: true,
-  //   })
-  //   try {
-  //     await client.connect();
-  //     const db = client.db('jloupsoloproject');
+    let vacationMgmt = null;
+    const postVacAdmin = async () => {
+      console.log("***In postVacation...")
 
-  //     const functionWithPromise = async customer => { //a function that returns a promise
-  //       const myPromise =
-  //         (new Promise(() => db.collection('vacation').findOne(
-  //           { "name": parseInt(customer.name) }))
-  //           .catch((err) => { console.log(err) }))
-  //       return myPromise;
-  //     }
+      try {
+        console.log('req.body', req.body)
+        await client.connect();
+        console.log('connected!');
+        const db = await client.db('jloupsoloproject');
+        let data = await db.collection('vacation').find({ name: req.body.name }).toArray()
+        console.log('data', data)
+        res.status(200).send(data)
+      }
 
-  //     // const waitTillComplete = async () => {
-  //     //   return Promise.all(getCustomerVacation.map(async (customer) => {
-  //     //     return functionWithPromise(customer)
-  //     //   }));
-  //     // };
+      catch (err) {
+        console.log(err.stack);
+        res.status(400).send({ err });
+      }
+    }
+    await postVacAdmin();
+  })
 
-  //     // waitTillComplete().then((data) => {
-  //     //   client.close();
-  //     //   res.status(200).json({ status: 200, order, data });
-  //     // })
+  //Update Price-Form retreive all in MongoDB
 
-  //   } catch (err) {
-  //     console.log(err);
-  //     res.status(500).json({ status: 500, data: req.body, message: err.message });
-  //   }
-  // })
+  .get("/updatePrice", async (req, res) => {
 
-  //----Gets one vacation by customer name from vacation from MongoDB----//
+    const client = new MongoClient('mongodb://localhost:27017', {
+      useUnifiedTopology: true,
+    })
 
-  // .get("/vacation/:name", async (req, res) => {
-  //   const client = new MongoClient('mongodb://localhost:27017', {
-  //     useUnifiedTopology: true,
-  //   })
+    let uniqueCustomerName = null;
+    const sendPrice = async () => {
+      console.log("***In sendPrice...")
+      try {
+        await client.connect();
+        console.log('connected!');
+        const db = await client.db('jloupsoloproject');
+        const data = await db.collection('farmerbasket').find().toArray()
+        console.log('sendPrice data', data)
 
-  //   let { customer } = req.params;
-  //   const sendVacation = async () => {
-  //     console.log("***In sendVacation...")
-  //     console.log('customer', customer)
-  //     try {
-  //       await client.connect();
-  //       console.log('connected!');
-  //       const db = await client.db('jloupsoloproject');
+        res.status(200).send(data);
+        client.close();
+        console.log('disconnected!');
+      }
 
-  //       const data = await db.collection('vacation').findOne({ name: customer.name })
-  //       console.log('data', data)
-  //       res.status(200).send(data)
-  //     }
-  //     catch (err) {
-  //       console.log(err.stack);
-  //       res.status(400).send({ err });
-  //     }
-  //   }
-  //   await sendVacation();
-  // })
+      catch (err) {
+        console.log(err.stack);
+        res.status(400).send({ err });
+      }
+    }
+    await sendPrice();
+  })
+
+  //Update Price-Form retreive all from one product by id in MongoDB
+
+  .post("/product/updatePrice", async (req, res) => {
+    console.log('req.body', req.body)
+    const client = new MongoClient('mongodb://localhost:27017', {
+      useUnifiedTopology: true,
+    })
+
+    let priceMgmt = null;
+    const postPriceUpdate = async () => {
+      console.log("***In postPriceUpdate...")
+
+      try {
+        console.log('req.body', req.body)
+        await client.connect();
+        console.log('connected!');
+        const db = await client.db('jloupsoloproject');
+        let data = await db.collection('farmerbasket').findOne({ _id: parseInt(req.body._id) })
+        console.log('data', data)
+        res.status(200).send(data)
+      }
+
+      catch (err) {
+        console.log(err.stack);
+        res.status(400).send({ err });
+      }
+    }
+    await postPriceUpdate();
+  })
 
   //---Gets users for authentication with Firebase---//
 

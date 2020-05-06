@@ -39,13 +39,13 @@ const Header = () => {
                             Vacation Form
                         </NavigationLink>
                     </li>
-                    {/* <li>
-                        <NavigationLink activeClassName="active" to="/post">
-                            Post
-                        </NavigationLink>
-                    </li> */}
                     <li>
-                        <NavigationLink activeClassName="active" to="/product/:id">
+                        <NavigationLink activeClassName="active" to="/updatePrice">
+                            Update Price Form
+                        </NavigationLink>
+                    </li>
+                    <li>
+                        <NavigationLink activeClassName="active" to="/adminView">
                             Administration Form
                         </NavigationLink>
                     </li>

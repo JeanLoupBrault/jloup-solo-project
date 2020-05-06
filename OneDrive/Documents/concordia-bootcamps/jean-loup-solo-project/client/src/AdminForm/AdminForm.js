@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 
 function AdminVacationForm() {
   const [name, setName] = useState("");
-  // const [displayVac, setDisplayVac] = useState("");
+  const [displayVac, setDisplayVac] = useState([]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  useEffect(() => {
     fetch("/vacation/:name", {
 
       method: "GET",
@@ -18,15 +16,34 @@ function AdminVacationForm() {
       .then((res) => res.json())
       .then((json) => {
         console.log("json", json);
-        console.log("json.name", json[1].name);
-
+        setDisplayVac(json)
       })
 
       .catch((err) => {
         console.log("message", err.message);
       });
-  };
+  }, []);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetch("/adminView", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+      }),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        console.log("json: :", json);
+        setDisplayVac(json)
+      })
+      .catch((err) => {
+        console.log("message", err.message);
+      });
+  }
 
   return (
     <Wrapper>
@@ -38,10 +55,23 @@ function AdminVacationForm() {
         <br></br>
         <Button>Submit</Button>
       </form>
-      <WrapperDisplayVacation>Display vacation by name</WrapperDisplayVacation>
+      <WrapperDisplayVacation>Display vacation by name
+          <div>
+          {displayVac.map(item => {
+            return (
+              <>
+                <div>
+                  {item.name}{item.vacation}{item.comment}
+                </div>
+              </>
+            )
+          })}
+        </div>
+      </WrapperDisplayVacation>
     </Wrapper>
   )
-}
+};
+
 
 
 const Input = styled.input`
