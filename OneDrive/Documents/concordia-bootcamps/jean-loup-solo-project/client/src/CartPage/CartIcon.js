@@ -1,7 +1,7 @@
 import React from "react";
 import { Icon } from "react-icons-kit";
 import { shoppingCart } from "react-icons-kit/feather/shoppingCart";
-import { getStoreProductArray } from "../../reducers/cart-reducer";
+import { getStoreProductArray } from "../reducers/cart-reducer";
 
 import { NavLink } from "react-router-dom";
 
@@ -9,7 +9,6 @@ import styled from "styled-components";
 
 import { useSelector } from "react-redux";
 
-// import { getStoreProductsArray } from "../../reducers/cart-reducer";
 
 const CartIcon = () => {
   const productQuantity = useSelector((state) => {

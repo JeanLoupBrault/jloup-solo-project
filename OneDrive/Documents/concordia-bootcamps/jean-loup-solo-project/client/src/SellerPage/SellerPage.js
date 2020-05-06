@@ -10,28 +10,29 @@ import {
 import LinearProgress from "@material-ui/core/LinearProgress";
 import styled from "styled-components";
 
+
 const SellerPage = () => {
-  // const dispatch = useDispatch();
-  // const sellerId = useParams();
-  // const oneProduct = useSelector((state) => state.product.products);
-  // const state = useSelector((state) => state.product.status);
-  // useEffect(() => {
-  //   dispatch(requestSellers());
-  //   fetch(`/sellers`)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       dispatch(receiveSellers(data));
-  //     })
-  //     .catch((error) => {
-  //       dispatch(receiveSellersError(error));
-  //     });
-  // }, []);
+  const dispatch = useDispatch();
+  const sellerId = useParams();
+  const oneProduct = useSelector((state) => state.product.products);
+  const state = useSelector((state) => state.product.status);
+  useEffect(() => {
+    dispatch(requestSellers());
+    fetch(`/sellers/detail/${sellerId.sellerId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch(receiveSellers(data));
+      })
+      .catch((error) => {
+        dispatch(receiveSellersError(error));
+      });
+  }, []);
   return (
     <Wrapper>
       <>
         <Header>Seller Page</Header>
         <div>{sellerName}</div>
-        <img src="child_grape.jpg" alt="" />
+        {/* <img src="child_grape.jpg" alt="" /> */}
       </>
     </Wrapper>
   );

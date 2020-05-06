@@ -7,27 +7,35 @@ const MainPage = () => {
   return (
 
     <Wrapper>
-      <NavBar />
+      {/* <NavBar /> */}
       <BgWrapper>
-        <BgImage src="/fitness-balancing.png" />
-        <BgMessageDiv2></BgMessageDiv2>
+        <BgImage src="/child_grape.png" />
+        <BgMessageDiv2>
+
+        </BgMessageDiv2>
         <BgMessage>
-          <h1>Nothing to worry about with Dragon Riders</h1>
+          <h1>Fresh fruits and vegetables from local farms with Farm Hook Market</h1>
         </BgMessage>
       </BgWrapper>
-      <FeaturedProductsLabel>
+      {/* <FeaturedProductsLabel>
         <h2>FLASH SALE</h2>
       </FeaturedProductsLabel>
-      <FeaturedProducts />
+      <FeaturedProducts /> */}
     </Wrapper>
   );
 };
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+width: 100%;
+  height: 100vh;
+  `;
 
 const BgImage = styled.img`
+width: 100%;
+height: 300px;
   border-bottom-left-radius: 40px;
   border-bottom-right-radius: 40px;
+  background-image: 'child_grape.png';
 `;
 const BgWrapper = styled.div`
   display: flex;

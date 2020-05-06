@@ -25,10 +25,12 @@ const providers = {
 const AppProvider = ({ children, signInWithGoogle, signOut, user }) => {
   const [appUser, setAppUser] = useState({});
   const [message, setMessage] = useState('');
+
   const handleSignOut = () => {
     signOut();
     setAppUser({});
     setMessage("");
+
   };
 
 
@@ -67,4 +69,5 @@ const AppProvider = ({ children, signInWithGoogle, signOut, user }) => {
 export default withFirebaseAuth({
   providers,
   firebaseAppAuth,
+  firebaseApp
 })(AppProvider);

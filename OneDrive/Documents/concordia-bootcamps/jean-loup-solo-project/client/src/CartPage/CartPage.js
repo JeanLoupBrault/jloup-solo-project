@@ -13,13 +13,14 @@ const Cart = () => {
   const subtotal = useSelector((state) => {
     const itemsPrice = Object.values(state.cart);
     return itemsPrice.reduce((acc, item) => {
-      const removeDollarSign = item.price.substr(1);
+      const removeDollarSign = item.price;
       const stringToNum = parseFloat(removeDollarSign);
       return stringToNum * item.quantity + acc;
     }, 0);
   });
-
-  console.log(cartState);
+  const state = useSelector((state) => state);
+  console.log('state', state);
+  console.log('cartState', cartState);
 
   const [open, setOpen] = useState(false);
 
@@ -39,7 +40,7 @@ const Cart = () => {
               <Qty
                 value={item.quantity}
                 onChange={(ev) =>
-                  dispatch(updateProduct(item.id, ev.target.value))
+                  dispatch(updateProduct(item._id, ev.target.value))
                 }
               ></Qty>
 
@@ -50,10 +51,7 @@ const Cart = () => {
               <Price>{item.price}</Price>
               <RemoveItem
                 style={{ width: 50 }}
-                onClick={() => dispatch(removeProduct(item.id))}
-              >
-                X
-              </RemoveItem>
+                onClick={() => dispatch(removeProduct(item._id))}>X</RemoveItem>
             </Subtitle>
           );
         })}

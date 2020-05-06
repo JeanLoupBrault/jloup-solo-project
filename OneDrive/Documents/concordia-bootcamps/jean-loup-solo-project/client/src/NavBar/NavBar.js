@@ -19,7 +19,7 @@ const NavBar = () => {
 
   useEffect(() => {
     dispatch(requestCategories());
-    fetch(`/categories/${params.country.replace(" ", "")}`)
+    fetch(`/categories/${params.region.replace(" ", "")}`)
       .then((res) => {
         return res.json();
       })

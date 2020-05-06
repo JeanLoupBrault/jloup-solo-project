@@ -67,7 +67,7 @@ const client = new MongoClient('mongodb://localhost:27017', {
 
 // };
 
-// Get farmerBasket in MongoDB jloupsoloproject collection farmbaskettest
+// Get farmerBasket in MongoDB jloupsoloproject collection farmerbasket
 
 const allFarmerBasket = JSON.parse(fs.readFileSync('./data/farmerBasket.json'));
 console.log('allFarmerBasket', allFarmerBasket);
@@ -78,7 +78,7 @@ const getFarmerBasket = async () => {
         console.log('connected!');
 
         const db = client.db('jloupsoloproject');
-        let result = await db.collection('farmerbaskettest').insertMany(allFarmerBasket);
+        let result = await db.collection('farmerbasket').insertMany(allFarmerBasket);
 
         //   assert.equal(allFarmerBasket.length, result.insertedCount);
         console.log('success');
@@ -92,5 +92,115 @@ const getFarmerBasket = async () => {
 
 };
 
-// getItems(); getCompanies(); 
-getFarmerBasket();
+// getFarmerBasket();
+
+// Get farmers in MongoDB jloupsoloproject collection farmers
+
+const allFarmers = JSON.parse(fs.readFileSync('./data/farmers.json'));
+console.log('allFarmers', allFarmers);
+const getFarmers = async () => {
+
+    try {
+        await client.connect();
+        console.log('connected!');
+
+        const db = client.db('jloupsoloproject');
+        let result = await db.collection('farmers').insertMany(allFarmers);
+
+        //   assert.equal(allFarmerBasket.length, result.insertedCount);
+        console.log('success');
+    }
+    catch (err) {
+        console.log(err.stack);
+    }
+    // close the connection to the database server
+    client.close();
+    console.log('disconnected!');
+
+};
+
+// getFarmers();
+
+// Get regions in MongoDB jloupsoloproject collection regions
+
+const allRegions = JSON.parse(fs.readFileSync('./data/regions.json'));
+console.log('allRegions', allRegions);
+const getRegions = async () => {
+
+    try {
+        await client.connect();
+        console.log('connected!');
+
+        const db = client.db('jloupsoloproject');
+        let result = await db.collection('regions').insertMany(allRegions);
+
+        //   assert.equal(allFarmerBasket.length, result.insertedCount);
+        console.log('success');
+    }
+    catch (err) {
+        console.log(err.stack);
+    }
+    // close the connection to the database server
+    client.close();
+    console.log('disconnected!');
+
+};
+
+// getRegions();
+
+// Get customer order(s) of vegetable basket in MongoDB jloupsoloproject collection order
+
+const allOrders = JSON.parse(fs.readFileSync('./data/order.json'));
+console.log('allOrders', allOrders);
+const getOrders = async () => {
+
+    try {
+        await client.connect();
+        console.log('connected!');
+
+        const db = client.db('jloupsoloproject');
+        let result = await db.collection('order').insertMany(allOrders);
+
+        //   assert.equal(allFarmerBasket.length, result.insertedCount);
+        console.log('success');
+    }
+    catch (err) {
+        console.log(err.stack);
+    }
+    // close the connection to the database server
+    client.close();
+    console.log('disconnected!');
+
+};
+
+// getOrders();
+
+// Get customer Vacation order(s) of vegetable basket in MongoDB jloupsoloproject collection vacation
+
+const allVacations = JSON.parse(fs.readFileSync('./data/vacation.json'));
+console.log('allVacations', allVacations);
+const getVacations = async () => {
+
+    try {
+        await client.connect();
+        console.log('connected!');
+
+        const db = client.db('jloupsoloproject');
+        let result = await db.collection('vacation').insertMany(allVacations);
+
+        //   assert.equal(allFarmerBasket.length, result.insertedCount);
+        console.log('success');
+    }
+    catch (err) {
+        console.log(err.stack);
+    }
+    // close the connection to the database server
+    client.close();
+    console.log('disconnected!');
+
+};
+
+getVacations();
+
+
+

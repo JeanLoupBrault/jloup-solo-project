@@ -17,7 +17,8 @@
 import React from "react";
 import ReactDOM, { render } from "react-dom";
 import { Provider } from "react-redux";
-
+import AppProvider from './AuthenticationFe/AppContext';
+// import AppProviderAdm from './AuthenticationAdm/AppContextAdm';
 import configureStore from "./store";
 
 import App from "./App";
@@ -25,12 +26,14 @@ import App from "./App";
 const store = configureStore();
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <AppProvider>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </AppProvider>,
   document.getElementById("root")
 );
-
+//render(<App />, document.getElementById('root'));
 
 // const App = () => {
 //   return (
@@ -89,4 +92,4 @@ ReactDOM.render(
 // `;
 
 
-render(<App />, document.getElementById('root'));
+

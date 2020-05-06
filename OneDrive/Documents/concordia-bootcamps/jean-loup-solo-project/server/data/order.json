@@ -1,19 +1,21 @@
-{
-  "order_id": 237,
-  "credit_card": 123456789,
-  "verification": 123,
-  "order_summary": [
-    {
-      "item_id": 6546,
-      "quantity": 1
-    },
-    {
-      "item_id": 6890,
-      "quantity": 16
-    },
-    {
-      "item_id": 7037,
-      "quantity": 2
-    }
-  ]
-}
+[
+  {
+    "_id": 237,
+    "credit_card": 123456789,
+    "verification": 123,
+    "order_summary": [
+      {
+        "item_id": 6546,
+        "quantity": 1
+      },
+      {
+        "item_id": 6890,
+        "quantity": 16
+      },
+      {
+        "item_id": 7037,
+        "quantity": 2
+      }
+    ]
+  }
+]

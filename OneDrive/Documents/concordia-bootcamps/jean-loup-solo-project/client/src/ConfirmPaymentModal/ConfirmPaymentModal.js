@@ -11,14 +11,19 @@ import Dialog from "@material-ui/core/Dialog";
 import { DialogContent, DialogContentText } from "@material-ui/core";
 import SnackBar from "../SnackBar/SnackBar";
 import styled from "styled-components";
-// import ErrorPage from "../ErrorPage/ErrorPage";
+import ErrorPage from "../ErrorPage/ErrorPage";
+import { clearCart } from '../actions';
+import { useDispatch } from "react-redux";
 
 function ConfirmPaymentModal(props) {
-  const order = props.cartStateArray.map((item) => {
-    return { item_id: item.id, quantity: item.quantity };
+  let order = props.cartStateArray.map((item) => {
+    const newQty = item.numInStock - item.quantity;
+    return { item_id: item._id, quantity: item.numInStock, newQuantity: newQty };
   });
+  console.log('order', order)
   const [test, setTest] = useState(true);
   const [message, setMessage] = useState("");
+  const dispatch = useDispatch();
   console.log("props", props);
   const { open } = props;
 
@@ -28,22 +33,26 @@ function ConfirmPaymentModal(props) {
 
   const handleClose = () => {
     setTest(false);
+    order = [];
+    console.log('order...', order)
   };
 
-  //   const priceTotal = props.cartStateArray.map((item) => {
-  //     return item.price;
-  //   });
+  const priceTotal = props.cartStateArray.map((item) => {
+    return item.price;
+  });
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
 
-    fetch("/order", {
-      method: "POST",
+    fetch("/products", {
+
+      method: "PUT",
       headers: {
         "content-type": "application/json",
       },
+
       body: JSON.stringify({
-        order_summary: order,
+        order,
       }),
     })
       .then((res) => res.json())
@@ -54,8 +63,38 @@ function ConfirmPaymentModal(props) {
       .catch((err) => {
         console.log("message", err.message);
       });
+
+
+    fetch("/order", {
+
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+
+      body: JSON.stringify({
+        order_summary: order,
+      }),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+
+        console.log("json", json);
+        if (json.success) {
+          setMessage("Successful Purchase!");
+          console.log('CLEAR CART')
+          dispatch(clearCart());
+        } else {
+          setMessage("UNSUCCESSFUL Purchase...");
+        }
+      })
+      .catch((err) => {
+        console.log("message", err.message);
+      });
+
+    console.log('message', message);
   };
-  console.log(message);
+
   return (
     <>
       <Dialog
@@ -80,7 +119,7 @@ function ConfirmPaymentModal(props) {
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              {`Thank You For Shoppoing With Dragon Riders. Your total price: ${props.price}`}
+              {`Thank You For Shopping With Farm Hook Market. Your total price: ${props.price}`}
             </DialogContentText>
           </DialogContent>
           <Test
@@ -98,7 +137,7 @@ function ConfirmPaymentModal(props) {
           <SnackBar />
         ) : message === "Failure" ? (
           <BadSnack>
-            <No>NAHHHH</No>
+            <No>UNSUCCESSFUL Purchase...</No>
           </BadSnack>
         ) : (
               <></>
@@ -106,6 +145,7 @@ function ConfirmPaymentModal(props) {
       </Wrapper>
     </>
   );
+
 }
 
 const Wrapper = styled.div`

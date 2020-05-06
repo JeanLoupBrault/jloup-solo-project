@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 // import { Icon } from 'react-icons-kit';
+import CartIcon from "../CartPage/CartIcon";
 // import { anchor } from 'react-icons-kit/feather/anchor';
 import FarmHookIcon from './FarmHookIcon';
 import { COLORS } from '../theme';
@@ -18,34 +19,44 @@ const Header = () => {
                             Home
                         </NavigationLink>
                     </li>
-                    <li>
+                    {/* <li>
                         <NavigationLink activeClassName="active" to="/about">
                             About
                         </NavigationLink>
-                    </li>
+                    </li> */}
                     <li>
+                        <NavigationLink activeClassName="active" to="/products">
+                            Products
+                        </NavigationLink>
+                    </li>
+                    {/* <li>
                         <NavigationLink activeClassName="active" to="/sellers">
                             Sellers
                         </NavigationLink>
-                    </li>
+                    </li> */}
                     <li>
-                        <NavigationLink activeClassName="active" to="/form">
-                            Form
+                        <NavigationLink activeClassName="active" to="/vacation">
+                            Vacation Form
                         </NavigationLink>
                     </li>
-                    <li>
+                    {/* <li>
                         <NavigationLink activeClassName="active" to="/post">
                             Post
                         </NavigationLink>
-                    </li>
+                    </li> */}
                     <li>
-                        <NavigationLink activeClassName="active" to="/postMongo">
-                            PostMongo
+                        <NavigationLink activeClassName="active" to="/product/:id">
+                            Administration Form
                         </NavigationLink>
                     </li>
                     <li>
                         <NavigationLink activeClassName="active" to="/detail/:productId">
                             Product Detail
+                        </NavigationLink>
+                    </li>
+                    <li>
+                        <NavigationLink activeClassName="active" to="/cart">
+                            Cart
                         </NavigationLink>
                     </li>
                     <li>
@@ -55,6 +66,9 @@ const Header = () => {
                     </li>
                 </NavigationList>
             </nav>
+            <CartIconWrapper>
+                <CartIcon />
+            </CartIconWrapper>
         </Wrapper>
     );
 };
@@ -65,6 +79,11 @@ const Wrapper = styled.header`
     align-items: center;
     padding-top: 30px;
     padding-bottom: 30px;
+`;
+
+const CartIconWrapper = styled.div`
+  margin-right: 40px;
+  display: flex;
 `;
 
 const Title = styled.h1`

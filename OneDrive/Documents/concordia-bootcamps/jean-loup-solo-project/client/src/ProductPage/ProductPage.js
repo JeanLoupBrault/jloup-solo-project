@@ -3,9 +3,9 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  requestCountryProducts,
-  receiveCountryProducts,
-  receiveCountryProductsError,
+  requestRegionProducts,
+  receiveRegionProducts,
+  receiveRegionProductsError,
   addProduct,
 } from "../actions";
 import LinearProgress from "@material-ui/core/LinearProgress";
@@ -15,63 +15,72 @@ const ProductPage = () => {
   const dispatch = useDispatch();
   const productId = useParams();
   const oneProduct = useSelector((state) => state.product.products);
+  let inStock = oneProduct.numInStock <= 0;
   const state = useSelector((state) => state.product.status);
   useEffect(() => {
-    dispatch(requestCountryProducts());
+    dispatch(requestRegionProducts());
     fetch(`/products/detail/${productId.productId}`)
       .then((res) => res.json())
       .then((data) => {
-        dispatch(receiveCountryProducts(data));
+        console.log('data', data)
+        dispatch(receiveRegionProducts(data));
       })
       .catch((error) => {
-        dispatch(receiveCountryProductsError(error));
+        dispatch(receiveRegionProductsError(error));
       });
   }, []);
+  console.log('oneProduct', oneProduct)
   return (
     <Wrapper>
       <Header>Product Page</Header>
       {state === "loading" ? (
         <LinearProgress variant="determinate" />
       ) : (
-          Object.values(oneProduct).map((product) => {
-            const inStock = product.numInStock <= 0;
-            return (
-              <ProductContainer>
-                <div className="imageContainer">
-                  <ProductImage src={product.imageSrc}></ProductImage>
-                </div>
-                <ProductName>{product.name}</ProductName>
-                <ProductPrice>{product.price}</ProductPrice>
-                <ProductCategory>
+
+          // Object.values(oneProduct).map((product) => {
+          //   console.log('product', product)
+          // return (
+
+          <ProductContainer>
+            <div className="imageContainer">
+              <ProductImage src={oneProduct.imageSrc}></ProductImage>
+            </div>
+            <ProductName>{oneProduct.name}</ProductName>
+            <ProductPrice>{oneProduct.price}</ProductPrice>
+            {/* <ProductCategory>
                   Location: {product.body_location}
-                </ProductCategory>
-                <ProductCategory>Category: {product.category}</ProductCategory>
-                <ProductCategory>
-                  {inStock
-                    ? `We're Out of Stock! Come Back For This Shortly!`
-                    : product.numInStock <= 5 && product.numInStock >= 2
-                      ? `There are only ${product.numInStock} item(s) left!`
-                      : product.numInStock <= 1
-                        ? `Only ${product.numInStock} left!`
-                        : `Stock: ${product.numInStock}`}
-                </ProductCategory>
-                <div className="buttonContainer">
-                  <Button
-                    disabled={inStock}
-                    onClick={() => dispatch(addProduct(product))}
-                  >
-                    Add To Cart{" "}
-                  </Button>
-                </div>
-              </ProductContainer>
-            );
-          })
-        )}
+                </ProductCategory> */}
+            <ProductCategory>Family: {oneProduct.family}</ProductCategory>
+            <ProductCategory>
+              {inStock
+                ? `We're Out of Stock! Come Back For This Shortly!`
+                : oneProduct.numInStock <= 5 && oneProduct.numInStock >= 2
+                  ? `There are only ${oneProduct.numInStock} item(s) left!`
+                  : oneProduct.numInStock <= 1
+                    ? `Only ${oneProduct.numInStock} left!`
+                    : `Stock: ${oneProduct.numInStock}`}
+            </ProductCategory>
+            <div className="buttonContainer">
+              <Button
+                disabled={inStock}
+                onClick={() => dispatch(addProduct(oneProduct))}
+              >
+                Add To Cart{" "}
+              </Button>
+            </div>
+          </ProductContainer>
+        )
+      }
+
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
+  /* display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: 32px;
+    margin: 32px 0; */
   padding-bottom: 24px;
   width: 100%;
   height: 100vh;

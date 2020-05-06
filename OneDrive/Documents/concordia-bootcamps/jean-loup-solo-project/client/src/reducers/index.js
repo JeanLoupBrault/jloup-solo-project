@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 
-import country from "./country-reducer";
+import region from "./region-reducer";
 import category from "./category-reducer";
 import product from "./product-reducer";
 import feature from "./feature-reducer";
@@ -10,7 +10,7 @@ import categoryProduct from "./category-product-reducer";
 const cart = cartReducer;
 
 export default combineReducers({
-  country,
+  region,
   category,
   product,
   feature,

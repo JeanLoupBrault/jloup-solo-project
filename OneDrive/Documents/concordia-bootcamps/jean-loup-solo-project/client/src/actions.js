@@ -1,31 +1,31 @@
-//--------------Request Countries----------//
+//--------------Request Regions----------//
 
-export const requestCountries = () => ({
-  type: "REQUEST_COUNTRIES",
+export const requestRegions = () => ({
+  type: "REQUEST_REGIONS",
 });
 
-export const receiveCountries = (countries) => ({
-  type: "RECEIVE_COUNTRIES",
-  countries,
+export const receiveRegions = (regions) => ({
+  type: "RECEIVE_REGIONS",
+  regions,
 });
 
-export const receiveCountriesError = () => ({
-  type: "RECEIVE_COUNTRIES_ERROR",
+export const receiveRegionsError = () => ({
+  type: "RECEIVE_REGIONS_ERROR",
 });
 
-//---------------Request Product by Country---------------//
+//---------------Request Product by Region---------------//
 
-export const requestCountryProducts = () => ({
-  type: "REQUEST_COUNTRY_PRODUCTS",
+export const requestRegionProducts = () => ({
+  type: "REQUEST_REGION_PRODUCTS",
 });
 
-export const receiveCountryProducts = (products) => ({
-  type: "RECEIVE_COUNTRY_PRODUCTS",
+export const receiveRegionProducts = (products) => ({
+  type: "RECEIVE_REGION_PRODUCTS",
   products,
 });
 
-export const receiveCountryProductsError = () => ({
-  type: "RECEIVE_COUNTRY_PRODUCTS_ERROR",
+export const receiveRegionProductsError = () => ({
+  type: "RECEIVE_REGION_PRODUCTS_ERROR",
 });
 
 //-------------Request Feature Products by Country-----//

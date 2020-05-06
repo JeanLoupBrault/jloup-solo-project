@@ -12,7 +12,8 @@ const { simulateProblems, getCountryList, getSellerList, getAvailableProductList
 const PORT = 4000;
 const { MongoClient } = require('mongodb');
 const { createUser, getUser } = require('./handlers');
-
+// const { createAdmin, getAdmin } = require('./handlersAdm');
+const assert = require('assert');
 
 express()
   .use(function (req, res, next) {
@@ -85,17 +86,17 @@ express()
     }
   })
 
-  .get("/products/detail/:productId", (req, res) => {
-    const { productId } = req.params;
-    const product = productData.find(
-      (product) => product.id === parseInt(productId)
-    );
-    if (product) {
-      return simulateProblems(res, { product });
-    } else {
-      return simulateProblems(res, { message: "Product not found." });
-    }
-  })
+  // .get("/products/detail/:productId", (req, res) => {
+  //   const { productId } = req.params;
+  //   const product = productData.find(
+  //     (product) => product.id === parseInt(productId)
+  //   );
+  //   if (product) {
+  //     return simulateProblems(res, { product });
+  //   } else {
+  //     return simulateProblems(res, { message: "Product not found." });
+  //   }
+  // })
 
   //---A countries Featured Products, Sorted By Lowest Price---//
 
@@ -127,32 +128,32 @@ express()
 
   //Order-Form Validation
 
-  .post("/order", (req, res) => {
-    const { order_summary } = req.body;
-    if (!order_summary.length) {
-      return res.status(400).send({ message: "Failure" });
-    }
-    const isOrderSuccessful = _.flatten(order_summary).map((item) => {
-      if (!item.item_id || !item.quantity) {
-        return false;
-      }
-      return productData
-        .filter((product) => product.id === item.item_id)
-        .map((orderItem) => {
-          if (orderItem.numInStock - item.quantity >= 0) {
-            orderItem.numInStock -= item.quantity;
-            return true;
-          } else if (orderItem.numInStock - item.quantity <= 0) {
-            return false;
-          }
-        });
-    });
-    if (_.flatten(isOrderSuccessful).includes(false)) {
-      return res.status(400).send({ message: "Failure" });
-    } else {
-      return res.status(200).send({ message: "Successful Purchase!" });
-    }
-  })
+  // .post("/order", (req, res) => {
+  //   const { order_summary } = req.body;
+  //   if (!order_summary.length) {
+  //     return res.status(400).send({ message: "Failure" });
+  //   }
+  //   const isOrderSuccessful = _.flatten(order_summary).map((item) => {
+  //     if (!item.item_id || !item.quantity) {
+  //       return false;
+  //     }
+  //     return productData
+  //       .filter((product) => product.id === item.item_id)
+  //       .map((orderItem) => {
+  //         if (orderItem.numInStock - item.quantity >= 0) {
+  //           orderItem.numInStock -= item.quantity;
+  //           return true;
+  //         } else if (orderItem.numInStock - item.quantity <= 0) {
+  //           return false;
+  //         }
+  //       });
+  //   });
+  //   if (_.flatten(isOrderSuccessful).includes(false)) {
+  //     return res.status(400).send({ message: "Failure" });
+  //   } else {
+  //     return res.status(200).send({ message: "Successful Purchase!" });
+  //   }
+  // })
 
   //---Gets Categories, Organized by Country---//
 
@@ -208,7 +209,7 @@ express()
         await client.connect();
         console.log('connected!');
         const db = await client.db('jloupsoloproject');
-        db.collection('farmerbaskettest').find().toArray((err, result) => {
+        db.collection('farmers').find().toArray((err, result) => {
           if (!!result) {
             uniqueSellers = []
             result.map((seller) => {
@@ -245,7 +246,7 @@ express()
         await client.connect();
         console.log('connected!');
         const db = await client.db('jloupsoloproject');
-        db.collection('farmerbaskettest').find().toArray((err, result) => {
+        db.collection('farmerbasket').find().toArray((err, result) => {
           if (!!result) {
             availableProducts = []
             result.map((avProduct) => {
@@ -268,9 +269,447 @@ express()
     await sendAvProducts();
   })
 
+  //---Gets unique regions (Farm Hook Market) list in an Array from MongoDB---//
+
+  .get("/regions", async (req, res) => {
+    const client = new MongoClient('mongodb://localhost:27017', {
+      useUnifiedTopology: true,
+    })
+    let uniqueRegions = null;
+    const sendRegions = async () => {
+      console.log("***In sendRegions...")
+      try {
+        await client.connect();
+        console.log('connected!');
+        const db = await client.db('jloupsoloproject');
+        db.collection('farmerbasket').find().toArray((err, result) => {
+          if (!!result) {
+            uniqueRegions = []
+            result.map((regions) => {
+              ;
+              if (uniqueRegions.indexOf(regions.regions) === -1) {
+                uniqueRegions.push(regions.regions);
+              }
+            })
+          }
+          res.status(200).send({ data: uniqueRegions });
+          client.close();
+          console.log('disconnected!');
+        });
+      }
+      catch (err) {
+        console.log(err.stack);
+        res.status(400).send({ err });
+      }
+    }
+    await sendRegions();
+  })
+
+  //----Gets all data from farmerBasket in an Array from MongoDB----//
+
+  .get("/products", async (req, res) => {
+    const client = new MongoClient('mongodb://localhost:27017', {
+      useUnifiedTopology: true,
+    })
+
+    let allProducts = null; //= getSellerList();
+    const sendAllProducts = async () => {
+      console.log("***In sendAllProducts...")
+      try {
+        await client.connect();
+        console.log('connected!');
+        const db = await client.db('jloupsoloproject');
+        db.collection('farmerbasket').find().toArray((err, result) => {
+          if (result) {
+
+            res.status(200).send({ data: result });
+            client.close();
+            console.log('disconnected!');
+          }
+        });
+      }
+      catch (err) {
+        console.log(err.stack);
+        res.status(400).send({ err });
+      }
+    }
+    await sendAllProducts();
+  })
+
+  //----Gets one productId (vegetable) from farmerBasket from MongoDB----//
+
+  .get("/products/detail/:productId", async (req, res) => {
+    const client = new MongoClient('mongodb://localhost:27017', {
+      useUnifiedTopology: true,
+    })
+
+    let { productId } = req.params;
+    const sendProduct = async () => {
+      console.log("***In sendProducts...")
+      try {
+        await client.connect();
+        console.log('connected!');
+        const db = await client.db('jloupsoloproject');
+
+        const data = await db.collection('farmerbasket').findOne({ _id: parseInt(productId) })
+        console.log('data', data)
+        res.status(200).send(data)
+      }
+      catch (err) {
+        console.log(err.stack);
+        res.status(400).send({ err });
+      }
+    }
+    await sendProduct();
+  })
+
+  //----Gets one sellerId (farmer) from farmers from MongoDB----//
+
+  .get("/sellers/detail/:sellerId", async (req, res) => {
+    const client = new MongoClient('mongodb://localhost:27017', {
+      useUnifiedTopology: true,
+    })
+
+    let { sellerId } = req.params;
+    const sendSeller = async () => {
+      console.log("***In sendSeller...")
+      try {
+        await client.connect();
+        console.log('connected!');
+        const db = await client.db('jloupsoloproject');
+        const data = await db.collection('farmers').findOne({ _id: parseInt(sellerId) })
+        console.log('data', data)
+        res.status(200).send(data)
+      }
+
+      catch (err) {
+        console.log(err.stack);
+        res.status(400).send({ err });
+      }
+    }
+    await sendSeller();
+  })
+
+  //Order-Form retreive all in MongoDB
+
+  .get("/order", async (req, res) => {
+
+    const client = new MongoClient('mongodb://localhost:27017', {
+      useUnifiedTopology: true,
+    })
+
+    let order = null;
+    const sendOrder = async () => {
+      console.log("***In sendOrder...")
+      try {
+        await client.connect();
+        console.log('connected!');
+        const db = await client.db('jloupsoloproject');
+        const data = await db.collection('order').find().toArray()
+        console.log('sendOrder data', data)
+        res.status(200).send(data);
+        client.close();
+        console.log('disconnected!');
+      }
+
+      catch (err) {
+        console.log(err.stack);
+        res.status(400).send({ err });
+      }
+    }
+    await sendOrder();
+  })
+
+  //Order-Form Validation add in MongoDB
+
+  .post("/order", async (req, res) => {
+
+    const client = new MongoClient('mongodb://localhost:27017', {
+      useUnifiedTopology: true,
+    })
+
+    let order = null;
+    const postOrder = async () => {
+      console.log("***In postOrder...")
+      try {
+        await client.connect();
+        console.log('connected!');
+        const db = await client.db('jloupsoloproject');
+        let data = await db.collection('order').insertOne(req.body);
+        // assert.equal(1, data.insertedCount);
+        console.log('postOrder data', data)
+        // res.status(201).json({ status: 201, data: req.body });
+        // const data = await db.collection('order').findOne({ _id: parseInt(order) })
+
+        res.status(200).send({ success: true });
+        client.close();
+        console.log('disconnected!');
+      }
+
+      catch (err) {
+        console.log(err.stack);
+        res.status(400).send({ err });
+      }
+    }
+    await postOrder();
+  })
+
+  //Order-Form Validation modify product quantity in MongoDB
+
+  .put("/products", async (req, res) => {
+
+    const order = Object.values(req.body.order);
+    console.log('req.body typeof: ', typeof order)
+
+    const client = new MongoClient('mongodb://localhost:27017', {
+      useUnifiedTopology: true,
+    });
+
+    try {
+      await client.connect();
+      const db = client.db('jloupsoloproject');
+
+      const functionWithPromise = async item => { //a function that returns a promise
+        const myPromise =
+          (new Promise(() => db.collection('farmerbasket').updateOne({ "_id": parseInt(item.item_id) }, { $set: { "numInStock": item.newQuantity } }))
+            .catch((err) => { console.log(err) }))
+        return myPromise;
+      }
+
+      const waitTillComplete = async () => {
+        return Promise.all(order.map(async (item) => {
+          return functionWithPromise(item)
+        }));
+      };
+
+      waitTillComplete().then((data) => {
+        client.close();
+        res.status(200).json({ status: 200, order, data });
+      })
+
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ status: 500, data: req.body, message: err.message });
+    }
+  })
+
+  //Order-Form Validation modify a selected product quantity and price in MongoDB
+
+  .put("/product/:id", async (req, res) => {
+
+    const updatePriceQty = Object.values(req.body.updatePriceQty);
+    console.log('req.body typeof: ', typeof updatePriceQty)
+
+    const client = new MongoClient('mongodb://localhost:27017', {
+      useUnifiedTopology: true,
+    });
+
+    try {
+      await client.connect();
+      const db = client.db('jloupsoloproject');
+
+      const functionWithPromise = async item => { //a function that returns a promise
+        const myPromise =
+          (new Promise(() => db.collection('farmerbasket').updateOne(
+            { "_id": parseInt(item.id) }, { $set: { "numInStock": item.newQty } },
+            { $set: { "price": item.newPrice } }))
+            .catch((err) => { console.log(err) }))
+        return myPromise;
+      }
+
+      const waitTillComplete = async () => {
+        return Promise.all(updatePriceQty.map(async (item) => {
+          return functionWithPromise(item)
+        }));
+      };
+
+      waitTillComplete().then((data) => {
+        client.close();
+        res.status(200).json({ status: 200, order, data });
+      })
+
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ status: 500, data: req.body, message: err.message });
+    }
+  })
+
+  //vacation-Form Validation add in MongoDB
+
+  .post("/vacation", async (req, res) => {
+    console.log('req.body', req.body)
+    const client = new MongoClient('mongodb://localhost:27017', {
+      useUnifiedTopology: true,
+    })
+
+    let vacationMgmt = null;
+    const postVacation = async () => {
+      console.log("***In postVacation...")
+
+      try {
+        console.log('req.body', req.body)
+        await client.connect();
+        console.log('connected!');
+        const db = await client.db('jloupsoloproject');
+        let data = await db.collection('vacation').insertOne(req.body);
+
+        // assert.equal(1, data.insertedCount);
+        console.log('postVacation data', data)
+        // res.status(201).json({ status: 201, data: req.body });
+        // const data = await db.collection('order').findOne({ _id: parseInt(order) })
+
+        res.status(200).send(data);
+        client.close();
+        console.log('disconnected!');
+      }
+
+      catch (err) {
+        console.log(err.stack);
+        res.status(400).send({ err });
+      }
+    }
+    await postVacation();
+  })
+
+  //Vacation-Form retreive all in MongoDB
+
+  // .get("/vacation/:name", async (req, res) => {
+
+  //   const client = new MongoClient('mongodb://localhost:27017', {
+  //     useUnifiedTopology: true,
+  //   })
+  //   const sendVacation = async () => {
+  //     console.log("***In sendVacation...")
+  //     await client.connect();
+  //     console.log('connected!');
+  //     const db = await client.db('jloupsoloproject');
+  //     const data = db.collection('vacation').find().toArray((data => {
+  //       if (data.length) {
+  //         const start = Number(req.query.start) || 0;
+  //         const cleanStart = start > -1 && start < result.length ? start : 0;
+  //         const end = cleanStart + (Number(req.query.limit) || 25);
+  //         const cleanEnd = end > result.length ? result.length - 1 : end;
+  //         const data = result.slice(cleanStart, cleanEnd);
+
+  //         console.log('sendVacation data', data)
+  //       } else {
+  //         res.status(404).json({ status: 404, data: 'Not Found' });
+  //       }
+  //       client.close();
+  //     })
+  //     )
+  //   }
+  //   await sendVacation();
+  // })
+
+  //Vacation-Form retreive all in MongoDB
+
+  .get("/vacation/:name", async (req, res) => {
+
+    const client = new MongoClient('mongodb://localhost:27017', {
+      useUnifiedTopology: true,
+    })
+
+    let uniqueCustomerName = null;
+    const sendVacation = async () => {
+      console.log("***In sendVacation...")
+      try {
+        await client.connect();
+        console.log('connected!');
+        const db = await client.db('jloupsoloproject');
+        const data = await db.collection('vacation').find().toArray()
+        console.log('sendVacation data', data)
+        if (data.name === req.params) {
+          uniqueCustomerName = []
+          data.map((custName) => {
+            ;
+            if (uniqueCustomerName.indexOf(custName.custName) === -1) {
+              uniqueCustomerName.push(custName.custName);
+            }
+          })
+        }
+        res.status(200).send(data);
+        client.close();
+        console.log('disconnected!');
+      }
+
+      catch (err) {
+        console.log(err.stack);
+        res.status(400).send({ err });
+      }
+    }
+    await sendVacation();
+  })
+
+  //Vacation-Form retreive all from one customer by name in MongoDB
+
+  // .get("/vacation/:name", async (req, res) => {
+
+  //   const client = new MongoClient('mongodb://localhost:27017', {
+  //     useUnifiedTopology: true,
+  //   })
+  //   try {
+  //     await client.connect();
+  //     const db = client.db('jloupsoloproject');
+
+  //     const functionWithPromise = async customer => { //a function that returns a promise
+  //       const myPromise =
+  //         (new Promise(() => db.collection('vacation').findOne(
+  //           { "name": parseInt(customer.name) }))
+  //           .catch((err) => { console.log(err) }))
+  //       return myPromise;
+  //     }
+
+  //     // const waitTillComplete = async () => {
+  //     //   return Promise.all(getCustomerVacation.map(async (customer) => {
+  //     //     return functionWithPromise(customer)
+  //     //   }));
+  //     // };
+
+  //     // waitTillComplete().then((data) => {
+  //     //   client.close();
+  //     //   res.status(200).json({ status: 200, order, data });
+  //     // })
+
+  //   } catch (err) {
+  //     console.log(err);
+  //     res.status(500).json({ status: 500, data: req.body, message: err.message });
+  //   }
+  // })
+
+  //----Gets one vacation by customer name from vacation from MongoDB----//
+
+  // .get("/vacation/:name", async (req, res) => {
+  //   const client = new MongoClient('mongodb://localhost:27017', {
+  //     useUnifiedTopology: true,
+  //   })
+
+  //   let { customer } = req.params;
+  //   const sendVacation = async () => {
+  //     console.log("***In sendVacation...")
+  //     console.log('customer', customer)
+  //     try {
+  //       await client.connect();
+  //       console.log('connected!');
+  //       const db = await client.db('jloupsoloproject');
+
+  //       const data = await db.collection('vacation').findOne({ name: customer.name })
+  //       console.log('data', data)
+  //       res.status(200).send(data)
+  //     }
+  //     catch (err) {
+  //       console.log(err.stack);
+  //       res.status(400).send({ err });
+  //     }
+  //   }
+  //   await sendVacation();
+  // })
+
   //---Gets users for authentication with Firebase---//
 
   .get('/users', getUser)
   .post('/users', createUser)
+  // .get('/admins', getAdmin)
+  // .post('/admins', createAdmin)
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));

@@ -8,6 +8,7 @@ import LandingPage from "./LandingPage/LandingPage";
 import MainPage from "./MainPage/MainPage";
 import CategoryPage from "./CategoryPage/CategoryPage";
 import ProductPage from "./ProductPage/ProductPage";
+import ProductsPage from "./ProductsPage/ProductsPage";
 import CartPage from "./CartPage/CartPage";
 import ErrorPage from "./ErrorPage/ErrorPage";
 import styled from "styled-components";
@@ -18,9 +19,9 @@ import configureStore from './store';
 
 // import FormPage from './FormManageProducts/FormPage';
 // import './App.css';
-import AddNinja from "./FormNinja/AddNinja.js";
-import PostList from "./Post/PostList.js";
-// import PostMongo from "./PostMongo/PostMongo.js";
+import VacationForm from "./VacationForm/VacationForm.js";
+// import PostList from "./Post/PostList.js";
+import AdminForm from "./AdminForm/AdminForm.js";
 
 // class AddNinja extends Component {
 //     state = {
@@ -62,11 +63,14 @@ function App() {
                         <Route exact path="/">
                             <LandingPage />
                         </Route>
-                        <Route path="/products/:country">
-                            <MainPage />
+                        <Route path="/products/:region">
+                            {/* <MainPage /> */}
                         </Route>
-                        <Route path="/categories/:country">
+                        <Route path="/categories/:region">
                             <CategoryPage />
+                        </Route>
+                        <Route path="/products">
+                            <ProductsPage />
                         </Route>
                         <Route path="/detail/:productId">
                             <ProductPage />
@@ -77,14 +81,14 @@ function App() {
                         {/* <Provider store={store}>
                             <FormPage />
                         </Provider> */}
-                        <Route path="/form">
-                            <AddNinja />
+                        <Route path="/vacation">
+                            <VacationForm />
                         </Route>
-                        <Route path="/post">
+                        {/* <Route path="/post">
                             <PostList />
-                        </Route>
-                        <Route path="/postMongo">
-                            {/* <PostMongo /> */}
+                        </Route> */}
+                        <Route path="/product/:id">
+                            <AdminForm />
                         </Route>
                         <Route path="/users">
                             <AppFirebase />
