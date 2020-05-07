@@ -495,11 +495,14 @@ express()
 
   //Update Price -Form Validation modify a selected product price in MongoDB
 
-  .put("/productId/update»Product", async (req, res) => {
-
-    const updatePriceQty = Object.values(req.body.updatePriceQty);
-    console.log('req.body typeof: ', typeof updatePriceQty)
-
+  .put("/productId/updatePrice", async (req, res) => {
+    const id = req.body._id;
+    console.log('id', id)
+    const newPrice = Object.values(req.body.newPrice);
+    console.log('req.body typeof: ', typeof newPrice)
+    console.log('newPrice', newPrice)
+    const newPriceJoin = newPrice.join('');
+    console.log('newPriceJoin', newPriceJoin)
     const client = new MongoClient('mongodb://localhost:27017', {
       useUnifiedTopology: true,
     });
@@ -508,25 +511,41 @@ express()
       await client.connect();
       const db = client.db('jloupsoloproject');
 
-      const functionWithPromise = async item => { //a function that returns a promise
-        const myPromise =
-          (new Promise(() => db.collection('farmerbasket').updateOne(
-            { "_id": parseInt(item.id) }, { $set: { "numInStock": item.newQty } },
-            { $set: { "price": item.newPrice } }))
-            .catch((err) => { console.log(err) }))
-        return myPromise;
-      }
+      const data = await db.collection('farmerbasket').updateOne(
+        { "_id": parseInt(id) }, { $set: { "price": newPriceJoin } })
 
-      const waitTillComplete = async () => {
-        return Promise.all(updatePriceQty.map(async (item) => {
-          return functionWithPromise(item)
-        }));
-      };
+      client.close();
+      res.status(200).json({ status: 200, data });
 
-      waitTillComplete().then((data) => {
-        client.close();
-        res.status(200).json({ status: 200, order, data });
-      })
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ status: 500, data: req.body, message: err.message });
+    }
+  })
+
+  //Update Qty -Form Validation modify a selected product quantity in MongoDB
+
+  .put("/productId/updateQty", async (req, res) => {
+    const id = req.body._id;
+    console.log('id', id)
+    const newQty = Object.values(req.body.newQty);
+    console.log('req.body typeof: ', typeof newQty)
+    console.log('newQty', newQty)
+    const newQtyJoin = newQty.join('');
+    console.log('newQtyJoin', newQtyJoin)
+    const client = new MongoClient('mongodb://localhost:27017', {
+      useUnifiedTopology: true,
+    });
+
+    try {
+      await client.connect();
+      const db = client.db('jloupsoloproject');
+
+      const data = await db.collection('farmerbasket').updateOne(
+        { "_id": parseInt(id) }, { $set: { "price": newQtyJoin } })
+
+      client.close();
+      res.status(200).json({ status: 200, data });
 
     } catch (err) {
       console.log(err);
@@ -692,6 +711,67 @@ express()
       }
     }
     await postPriceUpdate();
+  })
+
+  //Update Qty-Form retreive all in MongoDB
+
+  .get("/updateQty", async (req, res) => {
+
+    const client = new MongoClient('mongodb://localhost:27017', {
+      useUnifiedTopology: true,
+    })
+
+    let uniqueCustomerName = null;
+    const sendQty = async () => {
+      console.log("***In sendQty...")
+      try {
+        await client.connect();
+        console.log('connected!');
+        const db = await client.db('jloupsoloproject');
+        const data = await db.collection('farmerbasket').find().toArray()
+        console.log('sendQty data', data)
+
+        res.status(200).send(data);
+        client.close();
+        console.log('disconnected!');
+      }
+
+      catch (err) {
+        console.log(err.stack);
+        res.status(400).send({ err });
+      }
+    }
+    await sendQty();
+  })
+
+  //Update Price-Form retreive all from one product by id in MongoDB
+
+  .post("/product/updateQty", async (req, res) => {
+    console.log('req.body', req.body)
+    const client = new MongoClient('mongodb://localhost:27017', {
+      useUnifiedTopology: true,
+    })
+
+    let priceMgmt = null;
+    const postQtyUpdate = async () => {
+      console.log("***In postQtyUpdate...")
+
+      try {
+        console.log('req.body', req.body)
+        await client.connect();
+        console.log('connected!');
+        const db = await client.db('jloupsoloproject');
+        let data = await db.collection('farmerbasket').findOne({ _id: parseInt(req.body._id) })
+        console.log('data', data)
+        res.status(200).send(data)
+      }
+
+      catch (err) {
+        console.log(err.stack);
+        res.status(400).send({ err });
+      }
+    }
+    await postQtyUpdate();
   })
 
   //---Gets users for authentication with Firebase---//

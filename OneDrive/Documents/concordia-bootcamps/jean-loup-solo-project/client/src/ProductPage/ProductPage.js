@@ -47,9 +47,9 @@ const ProductPage = () => {
             </div>
             <ProductName>{oneProduct.name}</ProductName>
             <ProductPrice>{oneProduct.price}</ProductPrice>
-            {/* <ProductCategory>
-                  Location: {product.body_location}
-                </ProductCategory> */}
+            <ProductCategory>
+              Category: {oneProduct.category}
+            </ProductCategory>
             <ProductCategory>Family: {oneProduct.family}</ProductCategory>
             <ProductCategory>
               {inStock

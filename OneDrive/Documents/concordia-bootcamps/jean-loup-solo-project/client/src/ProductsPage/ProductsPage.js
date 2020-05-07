@@ -31,7 +31,7 @@ const ProductsPage = () => {
 
   console.log('manyProducts', manyProducts.data)
   return (<Wrapper>
-    <Header>Products Page</Header>
+    <Header>Products</Header>
     {state === "loading" || manyProducts.data === undefined ? (
       <LinearProgress variant="determinate" />
     ) : (
@@ -76,6 +76,9 @@ const ProductsPage = () => {
 };
 
 const Wrapper = styled.div`
+  display: flex;
+  flex-direction: right;
+  flex-flow: row wrap;
   padding-bottom: 24px;
   width: 100%;
   height: 100vh;

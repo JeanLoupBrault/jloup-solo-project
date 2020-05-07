@@ -55,8 +55,8 @@ function AdminVacationForm() {
         <br></br>
         <Button>Submit</Button>
       </form>
-      <WrapperDisplayVacation>Display vacation by name
-          <div>
+      <WrapperDisplayVacation><strong>Display vacation by name</strong>
+        <div>
           {displayVac.map(item => {
             return (
               <>

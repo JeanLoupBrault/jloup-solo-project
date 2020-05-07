@@ -40,8 +40,13 @@ const Header = () => {
                         </NavigationLink>
                     </li>
                     <li>
-                        <NavigationLink activeClassName="active" to="/updatePrice">
+                        <NavigationLink activeClassName="active" to="/productId/updatePrice">
                             Update Price Form
+                        </NavigationLink>
+                    </li>
+                    <li>
+                        <NavigationLink activeClassName="active" to="/productId/updateQty">
+                            Update Quantity Form
                         </NavigationLink>
                     </li>
                     <li>

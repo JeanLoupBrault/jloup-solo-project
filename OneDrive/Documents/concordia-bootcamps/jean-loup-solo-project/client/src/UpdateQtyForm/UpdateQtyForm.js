@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 
-function UpdatePriceForm() {
+function UpdateQtyForm() {
     const [_id, setProductId] = useState("");
-    const [newPrice, setProductNewPrice] = useState("");
-    const [displayPrice, setDisplayPrice] = useState([]);
+    const [newQty, setProductNewQty] = useState("");
+    const [displayQty, setDisplayQty] = useState([]);
 
     useEffect(() => {
-        fetch("/updatePrice", {
+        fetch("/updateQty", {
 
             method: "GET",
             headers: {
@@ -17,7 +17,7 @@ function UpdatePriceForm() {
             .then((res) => res.json())
             .then((json) => {
                 console.log("json", json);
-                setDisplayPrice(json)
+                setDisplayQty(json)
             })
 
             .catch((err) => {
@@ -27,20 +27,20 @@ function UpdatePriceForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        fetch("/productId/updatePrice", {
+        fetch("/productId/updateQty", {
             method: "PUT",
             headers: {
                 "content-type": "application/json",
             },
             body: JSON.stringify({
                 _id,
-                newPrice,
+                newQty,
             }),
         })
             .then((res) => res.json())
             .then((json) => {
                 console.log("json: :", json);
-                // setDisplayPrice(json)
+                // setDisplayQty(json)
             })
             .catch((err) => {
                 console.log("message", err.message);
@@ -57,19 +57,19 @@ function UpdatePriceForm() {
                 <br></br>
                 {/* <Button>Submit</Button> */}
                 <Wrapper>
-                    <label>Product New Price:</label>
-                    <Input value={newPrice} type="text" id="productNewPrice" placeholder="Product New Price (ex: 5.99)" required onChange={(e) => setProductNewPrice(e.target.value)} />
+                    <label>Product New Quantity:</label>
+                    <Input value={newQty} type="text" id="productNewQty" placeholder="Product New Quantity (ex: 280)" required onChange={(e) => setProductNewQty(e.target.value)} />
                 </Wrapper>
                 <br></br>
-                <Button>Update Price</Button>
+                <Button>Update Quantity</Button>
             </form>
-            <WrapperDisplayVacation><strong>Display price of product</strong>
+            <WrapperDisplayVacation><strong>Display quantity of product</strong>
                 <div>
-                    {displayPrice.map(item => {
+                    {displayQty.map(item => {
                         return (
                             <>
                                 <div>
-                                    {item._id}{item.name}{item.price}
+                                    {item._id}{item.name}{item.numInStock}
                                 </div>
                             </>
                         )
@@ -119,4 +119,4 @@ const WrapperDisplayVacation = styled.div`
     padding: 20px;
   `
 
-export default UpdatePriceForm;
+export default UpdateQtyForm;
