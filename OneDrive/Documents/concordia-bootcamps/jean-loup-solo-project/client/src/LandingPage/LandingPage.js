@@ -31,8 +31,8 @@ function Home() {
         </Paragraph>
         <Paragraph>
           <p>
-            At <strong>Farm Hook Market</strong>, we want to <strong>create a proximity between the customer and the farmers</strong>. Customers will have advantages by signing up and create an account with us. They will have access to fresh fruits, herbs and vegetables each week (the products are harvested the day of the delivery). These products come from known local farmers and grown organically. Some products are exclusive to Farm Hook Market. The basket price is slightly lower than the same basket that is sold at the grocery store. Signed-up customers have access to recipes and special farm events. Additionally, a donation corresponding to ten percent of the amount of each basket subscription is given to a local food bank.
-            Three vegetable basket subscriptions are offered:
+            At <strong>Farm Hook Market</strong>, we want to <strong>create a proximity between the customer and the farmers</strong>. Customers will have <strong>advantages</strong> by signing up and create an account with us. They will have access to <strong>fresh fruits</strong>, <strong>herbs</strong> and <strong>vegetables</strong> each week (the products are harvested the day of the delivery). These products come from known local farmers and <strong>grown organically</strong>. Some products are <strong>exclusive</strong> to Farm Hook Market. The basket price is slightly lower than the same basket that is sold at the grocery store. Signed-up customers have access to <strong>recipes</strong> and special farm events. Additionally, a <strong>donation</strong> corresponding to <strong>ten percent</strong> of the amount of each basket subscription is given to a local food bank.
+            <strong>Three vegetable basket subscriptions</strong> are offered:
             </p>
           <ol>
             1.	the <strong>standard basket</strong> for a family of <strong>4-5 people</strong>, 59$/week for 24 weeks
@@ -44,8 +44,8 @@ function Home() {
             3.	and the basket for <strong>1-2 people</strong>, 30,50$/week for 12 weeks
           </ol>
           <p>
-            The <strong>period covered</strong> goes from the beginning of June until mid-November. You may <strong>pay in 1, 2 or 3 installments</strong> in monthly equal payments. Baskets are delivered in one of our three drop off locations. There is a possibility of deferred delivery in case of vacation or missed basket.
-            It is also possible for any customer with or without an account to buy single products -extra vegetables for the weekly chosen basket or no basket at all. You will not find that offer anywhere else!
+            The <strong>period covered</strong> goes from the beginning of June until mid-November. You may <strong>pay in 1, 2 or 3 installments</strong> in monthly equal payments. Baskets are delivered in one of our <strong>three drop off locations</strong>. There is a possibility of deferred delivery in case of vacation or missed basket.
+            <strong>It is also possible for any customer with or without an account to buy single products -extra vegetables for the weekly chosen basket or no basket at all. You will not find that offer anywhere else!</strong>
             And <strong>farmers will benefit</strong> from the signed-up customers by gaining <strong>financial security</strong>, by being able to <strong>plan the harvests</strong> for the season, and most importantly by the <strong>close relationship created with the customers</strong>.
             We are proud to serve our community!
           </p>
@@ -81,6 +81,7 @@ const Paragraph = styled.p`
 height: 100px;
     font-size: 21px;
     margin-bottom: 32px;
+    padding: 5px 200px 5px 10px;
     color: black;
 `;
 

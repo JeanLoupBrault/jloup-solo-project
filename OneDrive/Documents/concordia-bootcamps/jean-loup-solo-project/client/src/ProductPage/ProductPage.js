@@ -47,10 +47,14 @@ const ProductPage = () => {
             </div>
             <ProductName>{oneProduct.name}</ProductName>
             <ProductPrice>{oneProduct.price}</ProductPrice>
+            <ProductCategory>Unit of Measure: {oneProduct.unitOfMeasure}</ProductCategory>
             <ProductCategory>
               Category: {oneProduct.category}
             </ProductCategory>
             <ProductCategory>Family: {oneProduct.family}</ProductCategory>
+            <ProductCategory>Product Id: {oneProduct._id}</ProductCategory>
+            <ProductCategory>Harvest Period: {oneProduct.harvestPeriod}</ProductCategory>
+            <ProductCategory>Harvest Next Period: {oneProduct.harvestNext}</ProductCategory>
             <ProductCategory>
               {inStock
                 ? `We're Out of Stock! Come Back For This Shortly!`
@@ -77,10 +81,6 @@ const ProductPage = () => {
 };
 
 const Wrapper = styled.div`
-  /* display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    grid-gap: 32px;
-    margin: 32px 0; */
   padding-bottom: 24px;
   width: 100%;
   height: 100vh;

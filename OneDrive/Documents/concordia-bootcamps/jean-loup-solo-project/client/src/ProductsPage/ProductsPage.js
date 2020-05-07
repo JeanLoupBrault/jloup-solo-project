@@ -50,6 +50,7 @@ const ProductsPage = () => {
                   Location: {product.body_location}
                 </ProductCategory> */}
               <ProductCategory>Family: {_id.family}</ProductCategory>
+              <ProductCategory>Product Id: {_id._id}</ProductCategory>
               <ProductCategory>
                 {!inStock
                   ? `We're Out of Stock! Come Back For This Shortly!`
