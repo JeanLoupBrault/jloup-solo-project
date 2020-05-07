@@ -542,7 +542,7 @@ express()
       const db = client.db('jloupsoloproject');
 
       const data = await db.collection('farmerbasket').updateOne(
-        { "_id": parseInt(id) }, { $set: { "price": newQtyJoin } })
+        { "_id": parseInt(id) }, { $set: { "numInStock": newQtyJoin } })
 
       client.close();
       res.status(200).json({ status: 200, data });
