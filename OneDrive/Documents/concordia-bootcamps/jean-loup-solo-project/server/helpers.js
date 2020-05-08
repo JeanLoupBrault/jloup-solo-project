@@ -1,4 +1,4 @@
-const companyData = require("./data/companies.json");
+// const companyData = require("./data/companies.json");
 const sellerData = require("./data/farmerBasket.json");
 const availableProductData = require("./data/farmerBasket.json");
 
@@ -20,13 +20,13 @@ const simulateProblems = (res, data) => {
   }, delay);
 };
 
-const getCountryList = () => {
-  const countryList = companyData.map((country) => {
-    return country.country;
-  });
-  const uniqueCountries = Array.from(new Set(countryList));
-  return uniqueCountries;
-};
+// const getCountryList = () => {
+//   const countryList = companyData.map((country) => {
+//     return country.country;
+//   });
+//   const uniqueCountries = Array.from(new Set(countryList));
+//   return uniqueCountries;
+// };
 
 const getSellerList = () => {
   const sellerList = sellerData.map((sellerName) => {
@@ -46,4 +46,4 @@ const getAvailableProductList = () => {
   return availableProducts;
 };
 
-module.exports = { simulateProblems, getCountryList, getSellerList, getAvailableProductList };
+module.exports = { simulateProblems, getSellerList, getAvailableProductList };

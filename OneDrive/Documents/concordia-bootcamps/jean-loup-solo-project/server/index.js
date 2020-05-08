@@ -3,8 +3,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
-const companyData = require("./data/companies.json");
-const productData = require("./data/items.json");
+// const companyData = require("./data/companies.json");
+// const productData = require("./data/items.json");
 const sellerData = require("./data/farmerBasket.json");
 const _ = require("lodash");
 const { simulateProblems, getCountryList, getSellerList, getAvailableProductList } = require("./helpers.js");
