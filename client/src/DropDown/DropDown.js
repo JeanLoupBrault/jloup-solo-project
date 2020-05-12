@@ -10,7 +10,7 @@ import {
   requestRegions,
   receiveRegions,
   receiveRegionsError,
-} from "../../actions";
+} from "../actions";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 const DropDown = () => {
@@ -23,10 +23,13 @@ const DropDown = () => {
   const regionArray = regionList.regions;
 
   React.useEffect(() => {
+    console.log('inUseEffectDropDown')
     dispatch(requestRegions());
-    fetch("/countries")
+    fetch("/regions")
       .then((res) => res.json())
+
       .then((data) => {
+        console.log('FetchDropRes', data)
         dispatch(receiveRegions(data));
         setIsSelected(!isSelected);
       })
@@ -43,12 +46,12 @@ const DropDown = () => {
               defaultValue=""
               onChange={(ev) => setRegionValue(ev.target.value)}
             >
-              <option selected>Please Choose A Country</option>
+              <option selected>Please Choose A Region</option>
               {regionArray.map((region) => {
                 return <option value={region}>{region}</option>;
               })}
             </StyledSelect>
-            {countryList.countries.includes(regionValue) ? (
+            {regionList.regions.includes(regionValue) ? (
               <Link to={`products/${regionValue}`}>
                 <StyledButton>CONFIRM</StyledButton>
               </Link>

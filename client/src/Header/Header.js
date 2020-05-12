@@ -16,14 +16,14 @@ const Header = () => {
                 <NavigationList>
                     <li>
                         <NavigationLink exact activeClassName="active" to="/">
+                            Landing
+                        </NavigationLink>
+                    </li>
+                    <li>
+                        <NavigationLink activeClassName="active" to="/home">
                             Home
                         </NavigationLink>
                     </li>
-                    {/* <li>
-                        <NavigationLink activeClassName="active" to="/about">
-                            About
-                        </NavigationLink>
-                    </li> */}
                     <li>
                         <NavigationLink activeClassName="active" to="/products">
                             Products
@@ -36,22 +36,22 @@ const Header = () => {
                     </li> */}
                     <li>
                         <NavigationLink activeClassName="active" to="/vacation">
-                            Vacation Form
+                            Vacation
                         </NavigationLink>
                     </li>
                     <li>
                         <NavigationLink activeClassName="active" to="/productId/updatePrice">
-                            Update Price Form
+                            Update Price
                         </NavigationLink>
                     </li>
                     <li>
                         <NavigationLink activeClassName="active" to="/productId/updateQty">
-                            Update Quantity Form
+                            Update Qty
                         </NavigationLink>
                     </li>
                     <li>
                         <NavigationLink activeClassName="active" to="/adminView">
-                            Administration Form
+                            Admin
                         </NavigationLink>
                     </li>
                     <li>
@@ -66,7 +66,7 @@ const Header = () => {
                     </li>
                     <li>
                         <NavigationLink activeClassName="active" to="/users">
-                            Account Sign In
+                            Sign In
                         </NavigationLink>
                     </li>
                 </NavigationList>

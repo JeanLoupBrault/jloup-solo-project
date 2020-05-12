@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 // import { items } from '../data/data';
 import { useSelector } from 'react-redux';
-// import DropDown from "../DropDown/DropDown";
+import DropDown from "../DropDown/DropDown";
 import ErrorPage from '../ErrorPage/ErrorPage';
 import CircularProgress from "@material-ui/core/CircularProgress"
 
@@ -54,7 +54,7 @@ function Home() {
             Email : info@farmhookmarket.com
           </p>
         </Paragraph>
-        {/* <DropDown /> */}
+        <DropDown />
       </LandingWrapper>
     </>
   );

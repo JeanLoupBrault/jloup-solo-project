@@ -5,6 +5,7 @@ import AppFirebase from './AuthenticationFe/AppFirebase';
 import GlobalStyles from "./GlobalStyles/GlobalStyles";
 import Header from "./Header/Header";
 import LandingPage from "./LandingPage/LandingPage";
+import HomePage from "./HomePage/HomePage";
 import MainPage from "./MainPage/MainPage";
 import CategoryPage from "./CategoryPage/CategoryPage";
 import ProductPage from "./ProductPage/ProductPage";
@@ -58,6 +59,9 @@ function App() {
                         </Route>
                         <Route path="/categories/:region">
                             <CategoryPage />
+                        </Route>
+                        <Route path="/home">
+                            <HomePage />
                         </Route>
                         <Route path="/products">
                             <ProductsPage />

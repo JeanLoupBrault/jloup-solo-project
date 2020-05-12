@@ -287,8 +287,8 @@ express()
             uniqueRegions = []
             result.map((regions) => {
               ;
-              if (uniqueRegions.indexOf(regions.regions) === -1) {
-                uniqueRegions.push(regions.regions);
+              if (uniqueRegions.indexOf(regions.region) === -1) {
+                uniqueRegions.push(regions.region);
               }
             })
           }

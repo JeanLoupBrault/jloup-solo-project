@@ -14,7 +14,7 @@ export default function regionReducer(state = initialState, action) {
     case "RECEIVE_REGIONS": {
       return {
         ...state,
-        regions: action.regions,
+        regions: action.farmerbasket.regions,
         status: "idle",
       };
     }
