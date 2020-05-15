@@ -6,19 +6,19 @@ import styled from 'styled-components';
 function AddTodo({ addTodo }) {
     const [value, setValue] = useState('');
 
-    // const handleOnChange = (e) => {
-    //     setValue(e.target.value)
-    // }
+    const handleOnChange = (e) => {
+        setValue(e.target.value)
+    }
 
     const handleAdd = () => {
-        setValue('')
         addTodo(value)
+        setValue('')
+
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setValue(e.target.value)
-
+        handleAdd()
         fetch("/todo", {
             method: "POST",
             headers: {
@@ -41,8 +41,8 @@ function AddTodo({ addTodo }) {
         <Wrapper>
             <SelectContainer>
                 <>
-                    <Input type="text" onChange={handleSubmit} value={value} placeholder="Your text here" />
-                    <StyledButton onClick={handleAdd}>Add</StyledButton>
+                    <Input type="text" onChange={handleOnChange} value={value} placeholder="Your text here" />
+                    <StyledButton onClick={handleSubmit}>Add</StyledButton>
                 </>
             </SelectContainer>
         </Wrapper>
