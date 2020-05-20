@@ -1,0 +1,13 @@
+{
+  "name": "server-reddit-live-jlb",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "create-react-app": "^3.4.1",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
