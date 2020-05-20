@@ -5,3 +5,4 @@ This is my final project at Concordia Bootcamp. Farm Hook Market is an e-commerc
 Front-end: React.js, Redux, JavaScript, CSS
 Back-end: Node.js, MongoDB, Express
 Productivity Tools: Git, GitHub
+
