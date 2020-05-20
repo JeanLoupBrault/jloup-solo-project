@@ -6,3 +6,4 @@ Front-end: React.js, Redux, JavaScript, CSS
 Back-end: Node.js, MongoDB, Express
 Productivity Tools: Git, GitHub
 
+https://youtu.be/JHaNBCP0fL8
