@@ -9,7 +9,7 @@ import {
   addProduct,
 } from "../actions";
 import CircularProgress from "@material-ui/core/CircularProgress";
-// import CategoryPage from "../CategoryPage/CategoryPage"
+
 function FeaturedProducts() {
   const features = useSelector((state) => state.feature.features);
   const status = useSelector((state) => state.feature.status);
@@ -63,7 +63,7 @@ function FeaturedProducts() {
             );
           })
         )}
-      {/* <CategoryPage countryId={countryId.country}/> */}
+
     </FeatureWrapper>
   );
 }

@@ -32,7 +32,6 @@ const SellerPage = () => {
       <>
         <Header>Seller Page</Header>
         <div>{sellerName}</div>
-        {/* <img src="child_grape.jpg" alt="" /> */}
       </>
     </Wrapper>
   );
@@ -103,8 +102,6 @@ const Button = styled.button`
   font-size: 12px;
   border-radius: 7px;
   cursor: pointer;
-  /* &: disabled {
-    background-color: grey;
-  } */
 `;
+
 export default SellerPage;

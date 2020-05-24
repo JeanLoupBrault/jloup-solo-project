@@ -1,7 +1,7 @@
 'use strict';
 
 const admin = require('firebase-admin');
-// require('dotenv').config({path:__dirname+'/./../../.env'})
+
 require('dotenv').config({ path: './../.env' });
 
 admin.initializeApp({

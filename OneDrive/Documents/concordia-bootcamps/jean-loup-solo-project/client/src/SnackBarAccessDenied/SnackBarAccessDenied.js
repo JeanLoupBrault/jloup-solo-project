@@ -4,7 +4,6 @@ const SnackBar = () => {
   return (
     <Message>
       <Success>Access denied. Please log in to have access to this form.</Success>
-      {/* <img src="/green.tractor.jpg"></img> */}
     </Message>
   );
 };
@@ -22,8 +21,7 @@ const Message = styled.div`
   border-radius: 20px;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.6);
   z-index: 1;
-  /* background-image: "/green_tractor.jpg"; */
-`;
+ `;
 
 const Success = styled.div`
   position: absolute;

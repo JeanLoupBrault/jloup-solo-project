@@ -10,10 +10,10 @@ import CategoryPage from "./CategoryPage/CategoryPage";
 import ProductPage from "./ProductPage/ProductPage";
 import ProductsPage from "./ProductsPage/ProductsPage";
 import CartPage from "./CartPage/CartPage";
-import ErrorPage from "./ErrorPage/ErrorPage";
+
 import styled from "styled-components";
 import Footer from "./Footer/Footer";
-import { useSelector, Provider } from "react-redux";
+
 
 import configureStore from './store';
 
@@ -26,25 +26,12 @@ import AdminForm from "./AdminForm/AdminForm.js";
 const store = configureStore();
 
 function App() {
-    // const countriesStatus = useSelector((state) => state.country.status);
-    // const categoryStatus = useSelector((state) => state.category.status);
-    // const productStatus = useSelector((state) => state.product.status);
-    // const cartStatus = useSelector((state) => state.cart.status)
-    // const isError = useSelector((state) => {
-    //     return Object.keys(state)
-    //         .map((reducer) => {
-    //             return state[reducer].status;
-    //         })
-    //         .filter((status) => status === "error");
-    // });
+
     return (
         <BrowserRouter>
             <Wrapper>
                 <GlobalStyles />
-                {/* {isError.length ? (
-                    <ErrorPage />
-                ) : (
-                        <> */}
+
                 <TheHead>
                     <Header />
                 </TheHead>
@@ -52,9 +39,6 @@ function App() {
                     <Switch>
                         <Route exact path="/">
                             <LandingPage />
-                        </Route>
-                        <Route path="/products/:region">
-                            {/* <MainPage /> */}
                         </Route>
                         <Route path="/categories/:region">
                             <CategoryPage />
@@ -88,8 +72,7 @@ function App() {
                 <TheFooter>
                     <Footer />
                 </TheFooter>
-                {/* </>
-                    )} */}
+
             </Wrapper>
         </BrowserRouter>
     );

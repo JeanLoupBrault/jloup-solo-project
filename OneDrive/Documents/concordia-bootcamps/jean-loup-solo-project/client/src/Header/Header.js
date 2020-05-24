@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
-// import { Icon } from 'react-icons-kit';
+
 import CartIcon from "../CartPage/CartIcon";
-// import { anchor } from 'react-icons-kit/feather/anchor';
+
 import FarmHookIcon from './FarmHookIcon';
 import { COLORS } from '../theme';
 
@@ -19,21 +19,11 @@ const Header = () => {
                             Home
                         </NavigationLink>
                     </li>
-                    {/* <li>
-                        <NavigationLink activeClassName="active" to="/about">
-                            About
-                        </NavigationLink>
-                    </li> */}
                     <li>
                         <NavigationLink activeClassName="active" to="/products">
                             Products
                         </NavigationLink>
                     </li>
-                    {/* <li>
-                        <NavigationLink activeClassName="active" to="/sellers">
-                            Sellers
-                        </NavigationLink>
-                    </li> */}
                     <li>
                         <NavigationLink activeClassName="active" to="/vacation">
                             Vacation Form
