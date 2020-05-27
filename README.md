@@ -1,3 +1,5 @@
+![](screenshots/jloupsoloproj_home.jpg)
+
 # Farm Hook Market
 
 ## Concordia Full-Stack Web Development Bootcamp - Final Project
