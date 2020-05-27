@@ -33,9 +33,16 @@ Node.js
 MongoDB
 Express
 Firebase
-Productivity Tools
+
+### Productivity Tools
+
 Git
 GitHub
+
+
+![](screenshots/jloupsoloproj_cart.png)
+
+
 
 ![](screenshots/jloupsoloproj_purchaseSuccess.png)
 
