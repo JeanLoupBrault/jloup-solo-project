@@ -37,6 +37,8 @@ Productivity Tools
 Git
 GitHub
 
+![](screenshots/jloupsoloproj_purchaseSuccess.png)
+
 ## Video Run-through
 
 https://youtu.be/JHaNBCP0fL8
