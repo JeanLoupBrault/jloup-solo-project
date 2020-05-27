@@ -14,6 +14,8 @@ It is possible to add extra vegetables individually or in addition to a subscrib
 Possibility to leave a message online to change vegetable basket pick-up date if customer is on vacation
 The administrator can update the quantity and the price of a product online
 
+![](screenshots/jloupsoloproj_products.jpg)
+
 ## Libraries/Languages Used
 
 ### Front-End:
