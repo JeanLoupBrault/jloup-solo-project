@@ -1,10 +1,14 @@
+const path = require('path');
+const envpath = __dirname + '/../.env';
+require('dotenv').config({ path: envpath });
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
-const { createUser, getUser } = require('../assets/handlers');
+const { createUser, getUser } = require('../handlers.js');
 
-require('dotenv').config();
-const PORT = process.env.PORT || 8000;
+
+const PORT = process.env.FIREBASEPORT || 8000;
+console.log('firebasePort', process.env.FIREBASEPORT)
 
 express()
   .use(function (req, res, next) {
