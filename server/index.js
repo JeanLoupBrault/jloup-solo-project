@@ -1,5 +1,5 @@
 "use strict";
-
+require('dotenv').config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
@@ -8,12 +8,12 @@ const sellerData = require("./data/farmerBasket.json");
 const _ = require("lodash");
 const { simulateProblems, getCountryList, getSellerList, getAvailableProductList } = require("./helpers.js");
 
-const PORT = 4000;
+const PORT = process.env.PORT;
 const { MongoClient } = require('mongodb');
 const { createUser, getUser } = require('./handlers');
 
 const assert = require('assert');
-
+console.log('process.env', process.env)
 express()
   .use(function (req, res, next) {
     res.header(
@@ -37,7 +37,7 @@ express()
   //---Gets unique sellers (farmers) list in an Array from MongoDB---//
 
   .get("/sellers", async (req, res) => {
-    const client = new MongoClient('mongodb://localhost:27017', {
+    const client = new MongoClient(process.env.MONGO_URI, {
       useUnifiedTopology: true,
     })
     let uniqueSellers = null; //= getSellerList();
@@ -46,7 +46,7 @@ express()
       try {
         await client.connect();
         console.log('connected!');
-        const db = await client.db('jloupsoloproject');
+        const db = await client.db(process.env.MONGO_DB);
         db.collection('farmers').find().toArray((err, result) => {
           if (!!result) {
             uniqueSellers = []
@@ -73,7 +73,7 @@ express()
   //---Gets available vegetables list in an Array from MongoDB---//
 
   .get("/available", async (req, res) => {
-    const client = new MongoClient('mongodb://localhost:27017', {
+    const client = new MongoClient(process.env.MONGO_URI, {
       useUnifiedTopology: true,
     })
 
@@ -83,7 +83,7 @@ express()
       try {
         await client.connect();
         console.log('connected!');
-        const db = await client.db('jloupsoloproject');
+        const db = await client.db(process.env.MONGO_DB);
         db.collection('farmerbasket').find().toArray((err, result) => {
           if (!!result) {
             availableProducts = []
@@ -110,7 +110,7 @@ express()
   //---Gets unique regions (Farm Hook Market) list in an Array from MongoDB---//
 
   .get("/regions", async (req, res) => {
-    const client = new MongoClient('mongodb://localhost:27017', {
+    const client = new MongoClient(process.env.MONGO_URI, {
       useUnifiedTopology: true,
     })
     let uniqueRegions = null;
@@ -119,7 +119,7 @@ express()
       try {
         await client.connect();
         console.log('connected!');
-        const db = await client.db('jloupsoloproject');
+        const db = await client.db(process.env.MONGO_DB);
         db.collection('farmerbasket').find().toArray((err, result) => {
           if (!!result) {
             uniqueRegions = []
@@ -146,7 +146,7 @@ express()
   //----Gets all data from farmerBasket in an Array from MongoDB----//
 
   .get("/products", async (req, res) => {
-    const client = new MongoClient('mongodb://localhost:27017', {
+    const client = new MongoClient(process.env.MONGO_URI, {
       useUnifiedTopology: true,
     })
 
@@ -156,7 +156,7 @@ express()
       try {
         await client.connect();
         console.log('connected!');
-        const db = await client.db('jloupsoloproject');
+        const db = await client.db(process.env.MONGO_DB);
         db.collection('farmerbasket').find().toArray((err, result) => {
           if (result) {
 
@@ -177,7 +177,7 @@ express()
   //----Gets one productId (vegetable) from farmerBasket from MongoDB----//
 
   .get("/products/detail/:productId", async (req, res) => {
-    const client = new MongoClient('mongodb://localhost:27017', {
+    const client = new MongoClient(process.env.MONGO_URI, {
       useUnifiedTopology: true,
     })
 
@@ -187,7 +187,7 @@ express()
       try {
         await client.connect();
         console.log('connected!');
-        const db = await client.db('jloupsoloproject');
+        const db = await client.db(process.env.MONGO_DB);
 
         const data = await db.collection('farmerbasket').findOne({ _id: parseInt(productId) })
         console.log('data', data)
@@ -204,7 +204,7 @@ express()
   //----Gets one sellerId (farmer) from farmers from MongoDB----//
 
   .get("/sellers/detail/:sellerId", async (req, res) => {
-    const client = new MongoClient('mongodb://localhost:27017', {
+    const client = new MongoClient(process.env.MONGO_URI, {
       useUnifiedTopology: true,
     })
 
@@ -214,7 +214,7 @@ express()
       try {
         await client.connect();
         console.log('connected!');
-        const db = await client.db('jloupsoloproject');
+        const db = await client.db(process.env.MONGO_DB);
         const data = await db.collection('farmers').findOne({ _id: parseInt(sellerId) })
         console.log('data', data)
         res.status(200).send(data)
@@ -232,7 +232,7 @@ express()
 
   .get("/order", async (req, res) => {
 
-    const client = new MongoClient('mongodb://localhost:27017', {
+    const client = new MongoClient(process.env.MONGO_URI, {
       useUnifiedTopology: true,
     })
 
@@ -242,7 +242,7 @@ express()
       try {
         await client.connect();
         console.log('connected!');
-        const db = await client.db('jloupsoloproject');
+        const db = await client.db(process.env.MONGO_DB);
         const data = await db.collection('order').find().toArray()
         console.log('sendOrder data', data)
         res.status(200).send(data);
@@ -262,7 +262,7 @@ express()
 
   .post("/order", async (req, res) => {
 
-    const client = new MongoClient('mongodb://localhost:27017', {
+    const client = new MongoClient(process.env.MONGO_URI, {
       useUnifiedTopology: true,
     })
 
@@ -272,7 +272,7 @@ express()
       try {
         await client.connect();
         console.log('connected!');
-        const db = await client.db('jloupsoloproject');
+        const db = await client.db(process.env.MONGO_DB);
         let data = await db.collection('order').insertOne(req.body);
 
         console.log('postOrder data', data)
@@ -297,13 +297,13 @@ express()
     const order = Object.values(req.body.order);
     console.log('req.body typeof: ', typeof order)
 
-    const client = new MongoClient('mongodb://localhost:27017', {
+    const client = new MongoClient(process.env.MONGO_URI, {
       useUnifiedTopology: true,
     });
 
     try {
       await client.connect();
-      const db = client.db('jloupsoloproject');
+      const db = client.db(process.env.MONGO_DB);
 
       const functionWithPromise = async item => { //a function that returns a promise
         const myPromise =
@@ -339,13 +339,13 @@ express()
     console.log('newPrice', newPrice)
     const newPriceJoin = newPrice.join('');
     console.log('newPriceJoin', newPriceJoin)
-    const client = new MongoClient('mongodb://localhost:27017', {
+    const client = new MongoClient(process.env.MONGO_URI, {
       useUnifiedTopology: true,
     });
 
     try {
       await client.connect();
-      const db = client.db('jloupsoloproject');
+      const db = client.db(process.env.MONGO_DB);
 
       const data = await db.collection('farmerbasket').updateOne(
         { "_id": parseInt(id) }, { $set: { "price": newPriceJoin } })
@@ -369,13 +369,13 @@ express()
     console.log('newQty', newQty)
     const newQtyJoin = newQty.join('');
     console.log('newQtyJoin', newQtyJoin)
-    const client = new MongoClient('mongodb://localhost:27017', {
+    const client = new MongoClient(process.env.MONGO_URI, {
       useUnifiedTopology: true,
     });
 
     try {
       await client.connect();
-      const db = client.db('jloupsoloproject');
+      const db = client.db(process.env.MONGO_DB);
 
       const data = await db.collection('farmerbasket').updateOne(
         { "_id": parseInt(id) }, { $set: { "numInStock": newQtyJoin } })
@@ -393,7 +393,7 @@ express()
 
   .post("/vacation", async (req, res) => {
     console.log('req.body', req.body)
-    const client = new MongoClient('mongodb://localhost:27017', {
+    const client = new MongoClient(process.env.MONGO_URI, {
       useUnifiedTopology: true,
     })
 
@@ -405,7 +405,7 @@ express()
         console.log('req.body', req.body)
         await client.connect();
         console.log('connected!');
-        const db = await client.db('jloupsoloproject');
+        const db = await client.db(process.env.MONGO_DB);
         let data = await db.collection('vacation').insertOne(req.body);
 
 
@@ -430,7 +430,7 @@ express()
 
   .get("/vacation/:name", async (req, res) => {
 
-    const client = new MongoClient('mongodb://localhost:27017', {
+    const client = new MongoClient(process.env.MONGO_URI, {
       useUnifiedTopology: true,
     })
 
@@ -440,7 +440,7 @@ express()
       try {
         await client.connect();
         console.log('connected!');
-        const db = await client.db('jloupsoloproject');
+        const db = await client.db(process.env.MONGO_DB);
         const data = await db.collection('vacation').find().toArray()
         console.log('sendVacation data', data)
 
@@ -461,7 +461,7 @@ express()
 
   .post("/adminView", async (req, res) => {
     console.log('req.body', req.body)
-    const client = new MongoClient('mongodb://localhost:27017', {
+    const client = new MongoClient(process.env.MONGO_URI, {
       useUnifiedTopology: true,
     })
 
@@ -473,7 +473,7 @@ express()
         console.log('req.body', req.body)
         await client.connect();
         console.log('connected!');
-        const db = await client.db('jloupsoloproject');
+        const db = await client.db(process.env.MONGO_DB);
         let data = await db.collection('vacation').find({ name: req.body.name }).toArray()
         console.log('data', data)
         res.status(200).send(data)
@@ -491,7 +491,7 @@ express()
 
   .get("/updatePrice", async (req, res) => {
 
-    const client = new MongoClient('mongodb://localhost:27017', {
+    const client = new MongoClient(process.env.MONGO_URI, {
       useUnifiedTopology: true,
     })
 
@@ -501,7 +501,7 @@ express()
       try {
         await client.connect();
         console.log('connected!');
-        const db = await client.db('jloupsoloproject');
+        const db = await client.db(process.env.MONGO_DB);
         const data = await db.collection('farmerbasket').find().toArray()
         console.log('sendPrice data', data)
 
@@ -522,7 +522,7 @@ express()
 
   .post("/product/updatePrice", async (req, res) => {
     console.log('req.body', req.body)
-    const client = new MongoClient('mongodb://localhost:27017', {
+    const client = new MongoClient(process.env.MONGO_URI, {
       useUnifiedTopology: true,
     })
 
@@ -534,7 +534,7 @@ express()
         console.log('req.body', req.body)
         await client.connect();
         console.log('connected!');
-        const db = await client.db('jloupsoloproject');
+        const db = await client.db(process.env.MONGO_DB);
         let data = await db.collection('farmerbasket').findOne({ _id: parseInt(req.body._id) })
         console.log('data', data)
         res.status(200).send(data)
@@ -552,7 +552,7 @@ express()
 
   .get("/updateQty", async (req, res) => {
 
-    const client = new MongoClient('mongodb://localhost:27017', {
+    const client = new MongoClient(process.env.MONGO_URI, {
       useUnifiedTopology: true,
     })
 
@@ -562,7 +562,7 @@ express()
       try {
         await client.connect();
         console.log('connected!');
-        const db = await client.db('jloupsoloproject');
+        const db = await client.db(process.env.MONGO_DB);
         const data = await db.collection('farmerbasket').find().toArray()
         console.log('sendQty data', data)
 
@@ -583,7 +583,7 @@ express()
 
   .post("/product/updateQty", async (req, res) => {
     console.log('req.body', req.body)
-    const client = new MongoClient('mongodb://localhost:27017', {
+    const client = new MongoClient(process.env.MONGO_URI, {
       useUnifiedTopology: true,
     })
 
@@ -595,7 +595,7 @@ express()
         console.log('req.body', req.body)
         await client.connect();
         console.log('connected!');
-        const db = await client.db('jloupsoloproject');
+        const db = await client.db(process.env.MONGO_DB);
         let data = await db.collection('farmerbasket').findOne({ _id: parseInt(req.body._id) })
         console.log('data', data)
         res.status(200).send(data)

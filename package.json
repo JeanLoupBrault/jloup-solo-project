@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "elliptic": "^6.5.3",
+    "lodash": "^4.17.20",
+    "serialize-javascript": "^4.0.0",
+    "websocket-extensions": "^0.1.4"
+  }
+}
